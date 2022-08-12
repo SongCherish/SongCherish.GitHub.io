@@ -40,17 +40,17 @@
                     <h1>支付宝、微信刷步数</h1>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-username" for="user"></label>
-                    <input type="text" name="user" id="user" lay-verify="required|account" placeholder="小米运动手机号" autocomplete="off" class="layui-input">
+                    <label class="layui-icon layui-icon-username" for="mobile"></label>
+                    <input type="text" name="mobile" id="mobile" lay-verify="required|account" placeholder="小米运动手机号" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-password" for="pass"></label>
-                    <input type="password" name="pass" id="pass" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
+                    <label class="layui-icon layui-icon-password" for="password"></label>
+                    <input type="password" name="password" id="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-username" for="count"></label>
-                    <input type="text" name="count" id="count" lay-verify="required|account" placeholder="想要刷取的步数" autocomplete="off" class="layui-input">
+                    <label class="layui-icon layui-icon-username" for="step"></label>
+                    <input type="text" name="step" id="step" lay-verify="required|account" placeholder="想要刷取的步数" autocomplete="off" class="layui-input">
                 </div>
 
 
@@ -62,6 +62,8 @@
             <div class="layui-form-item">
                 <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal layui-btn-fluid" id="help">使 用 方 法</button>
             </div>
+
+
                 <div class="layui-form-item">
                 <a href="https://mp.weixin.qq.com/s/8uwu0Uc2lRzQRVGsAGOycQ" class="layui-btn layui-btn layui-btn-normal layui-btn-fluid">更 多 工 具</a>
             </div>
@@ -85,28 +87,45 @@
             });
         });
         $(document).on('click',"#help",function(){
-
-            layer.alert("1.手机在应用商店下载小米运动（现已改名为Zepp Life）。<br>" +
+/*
+            layer.msg("1.手机在应用商店下载小米运动（现已改名为Zepp Life）。<br>" +
                 "2.使用手机号登录小米运动（一定要用手机号登录，没有账号可以用手机号注册）。<br>" +
                 "3.登陆之后，点击“我的”，下拉找到“第三方接入”，点进去。<br>" +
                 "4.绑定微信和支付宝。<br>" +
                 "5.在本页面输入小米运动登录的手机号、密码、刷取的步数，然后点击提交即可。<br>" +
+                "(小提示：封顶98888步，建议4/5万左右)", {
+                time: 0 //不自动关闭
+                ,btn: ['我知道了']
+                ,btnAlign: 'c'
+                ,closeBtn:1
+
+            });
+
+ */
+
+            layer.alert("1、手机在应用商店下载小米运动（现已改名为Zepp Life）。<br>" +
+                "2、使用手机号登录小米运动（一定要用手机号登录，没有账号可以用手机号注册）。<br>" +
+                "3、登陆之后，点击“我的”，下拉找到“第三方接入”，点进去。<br>" +
+                "4、绑定微信和支付宝。<br>" +
+                "5、在本页面输入小米运动登录的手机号、密码、刷取的步数，然后点击提交即可。<br>" +
                 "(小提示：封顶98888步，建议4/5万左右)");
+
         });
 
 
-        $(document).on('click',"#about",function(){
-
-            layer.alert("免费一键查询王者战力榜，改战区必备工具");
-        });
         // 进行登录操作
         form.on('submit(login)', function (data) {
             console.log(data);
-            $.post("http://fuyhi.top/api/xiaomi/api.php?",data.field,function (result) {
+            var index = layer.load(0,{time: 30*1000});
+
+            $.post("https://api.kit9.cn/api/milletmotion/?",data.field,function (result) {
+
+                layer.close(index);
+
                 if(result.code==200){
-                    layer.msg(result.msg+"刷取步数为："+result.count);
+                    layer.msg(result.data.state);
                 } else {
-                    layer.msg(result.msg);
+                    layer.msg(result.data);
                 }
             },"json");
             return false;
