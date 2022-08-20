@@ -9,7 +9,7 @@
     <meta name="renderer" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>小姐姐在线随机播放 - 小新API</title>
-    <link rel="stylesheet" href="http://api.xiao-xin.top/zx/style.css">
+    <link rel="stylesheet" href="https://api.xiao-xin.top/zx/style.css">
     <style>
         #tool {
             background: #FFC0CB;
@@ -27,7 +27,7 @@
 
 
 <section id="main">
-    <video id="player" src="http://api.xiao-xin.top/API/kuaishou.php?type=video" controls autoplay webkit-playsinline playsinline></video>
+    <video id="player" src="https://api.xiao-xin.top/API/kuaishou.php?type=video" controls autoplay webkit-playsinline playsinline></video>
 </section>
 <section id="buttons">
     <button id="switch">连续: 开</button>
@@ -57,7 +57,7 @@
         var type = true;
         var player = get('player');
         var randomm = function () {
-            player.src = 'http://api.xiao-xin.top/API/kuaishou.php?type=video';
+            player.src = 'https://api.xiao-xin.top/API/kuaishou.php?type=video';
             player.play();
         }
         bind(get('next'), 'click', randomm);
