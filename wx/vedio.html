@@ -67,7 +67,7 @@
 
 
 <section id="main">
-    <video id="player" src="https://api.xiao-xin.top/API/kuaishou.php?type=video" controls autoplay webkit-playsinline playsinline></video>
+    <video id="player" src="https://api.xiao-xin.top/zx/free.php" controls autoplay webkit-playsinline playsinline></video>
 </section>
 <section id="buttons">
     <button id="switch">连续: 开</button>
@@ -97,7 +97,7 @@
         var type = true;
         var player = get('player');
         var randomm = function () {
-            player.src = 'https://api.xiao-xin.top/API/kuaishou.php?type=video';
+            player.src = 'https://api.xiao-xin.top/zx/free.php';
             player.play();
         }
         bind(get('next'), 'click', randomm);
