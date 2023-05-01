@@ -422,7 +422,7 @@
             })), 1)], 1), t.cdk ? n("v-uni-view", {
                 staticStyle: {
                     width: "150px",
-                    margin: "0px auto",
+                    margin: "80px auto",
                     "margin-top": "20px"
                 }
             }, [n("u-button", {
@@ -430,6 +430,20 @@
                     click: function (e) {
                         arguments[0] = e = t.$handleEvent(e), t.copyURL()
                     }
+                }, staticStyle: {
+                    width: "150px",
+                    margin: "20px auto",
+                    "margin-top": "20px"
+                }
+            }),n("u-button", {
+                attrs: {type: "primary", text: "我要改战区", icon: "share"}, on: {
+                    click: function (e) {
+                        location.href= "https://www.vifaka.com/goods/A3A990CE392D3B0F"
+                    }
+                }, staticStyle: {
+                    width: "150px",
+                    margin: "20px auto",
+                    "margin-top": "20px"
                 }
             })], 1) : t._e()], 1) : t._e()], 1)
         }, r = []
